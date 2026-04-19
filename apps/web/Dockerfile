@@ -19,6 +19,8 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=3000
+# Bind on all interfaces so the platform's proxy can reach the server
+ENV HOSTNAME=0.0.0.0
 # API base URL — override at runtime (Railway / Fly / etc.)
 ENV NEXT_PUBLIC_API_URL=http://localhost:3333
 

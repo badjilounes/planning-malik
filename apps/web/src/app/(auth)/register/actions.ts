@@ -32,6 +32,7 @@ export async function registerAction(
     if (err instanceof ApiError && err.status === 409) {
       return { error: 'An account with this email already exists.' };
     }
+    console.error('[registerAction] fetch failed', { apiUrl: process.env.API_URL, err });
     return { error: 'Could not reach the API. Is it running?' };
   }
 

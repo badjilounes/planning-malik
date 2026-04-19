@@ -28,6 +28,7 @@ export async function loginAction(
     if (err instanceof ApiError && (err.status === 401 || err.status === 400)) {
       return { error: 'Invalid email or password.' };
     }
+    console.error('[loginAction] fetch failed', { apiUrl: process.env.API_URL, err });
     return { error: 'Could not reach the API. Is it running?' };
   }
 

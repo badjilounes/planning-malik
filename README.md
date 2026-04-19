@@ -49,13 +49,29 @@ Demo credentials after seeding: `demo@planning.app` / `demo1234`.
 ```bash
 npm run dev              # api (3333) + web (3000) in parallel
 # — or individually —
-npm run api:serve        # nest start --watch, port 3333
+npm run api:serve        # nest start --watch (ts-node), port 3333
 npm run web:serve        # next dev, port 3000
 ```
 
 Health check: `GET http://localhost:3333/api/health`.
 Web UI: `http://localhost:3000` — middleware redirects to `/login` if you're
 not signed in.
+
+### Running the production build
+
+```bash
+npm run api:build        # @nx/webpack bundles to apps/api/dist/main.js (~70 KB)
+npm run api:start        # node apps/api/dist/main.js
+npm run web:build        # next build
+npm run web:start        # next start
+```
+
+> **Heads up:** don't run `nest start` (without `--watch`) directly from
+> `apps/api/` — Nest CLI's tsc mode doesn't resolve the `@planning/*` path
+> aliases into a runnable bundle. Always go through `npm run api:serve`
+> (dev) or `npm run api:build` + `npm run api:start` (prod). The webpack
+> build at `apps/api/webpack.config.js` is what produces a self-contained
+> `main.js`.
 
 ## Scripts
 

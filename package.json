@@ -6,6 +6,7 @@
   "scripts": {
     "api:serve": "nx serve api",
     "api:build": "nx build api",
+    "api:start": "nx start api",
     "web:serve": "nx serve web",
     "web:build": "nx build web",
     "dev": "nx run-many -t serve -p api web --parallel",
@@ -55,6 +56,7 @@
     "@nx/eslint-plugin": "^20.3.0",
     "@nx/jest": "^20.3.0",
     "@nx/js": "^20.3.0",
+    "@nx/webpack": "^20.3.0",
     "@swc-node/register": "^1.10.9",
     "@swc/core": "^1.10.0",
     "@swc/helpers": "^0.5.15",

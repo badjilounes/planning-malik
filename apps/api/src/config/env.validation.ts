@@ -1,4 +1,4 @@
-import { plainToInstance } from 'class-transformer';
+import { plainToInstance, Type } from 'class-transformer';
 import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, validateSync } from 'class-validator';
 
 enum NodeEnv {
@@ -12,6 +12,7 @@ export class EnvVars {
   @IsOptional()
   NODE_ENV: NodeEnv = NodeEnv.Development;
 
+  @Type(() => Number)
   @IsInt()
   @IsOptional()
   PORT = 3333;

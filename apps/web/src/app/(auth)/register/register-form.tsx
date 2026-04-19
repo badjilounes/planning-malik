@@ -17,7 +17,7 @@ export function RegisterForm() {
     <Card className="p-6">
       <form action={formAction} className="flex flex-col gap-4">
         <div>
-          <Label htmlFor="displayName">Display name (optional)</Label>
+          <Label htmlFor="displayName">Nom affiché (optionnel)</Label>
           <Input id="displayName" name="displayName" type="text" autoComplete="name" />
         </div>
 
@@ -34,13 +34,13 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Mot de passe</Label>
           <Input
             id="password"
             name="password"
             type="password"
             autoComplete="new-password"
-            placeholder="At least 8 characters"
+            placeholder="8 caractères minimum"
             required
             minLength={8}
           />
@@ -62,7 +62,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="lg" fullWidth disabled={pending}>
-      {pending ? 'Creating account…' : 'Create account'}
+      {pending ? 'Création…' : 'Créer le compte'}
     </Button>
   );
 }

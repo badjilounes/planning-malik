@@ -18,7 +18,7 @@ export async function loginAction(
   const redirectTo = String(formData.get('from') ?? '/calendar');
 
   if (!email || !password) {
-    return { error: 'Please enter your email and password.' };
+    return { error: 'Veuillez saisir votre email et votre mot de passe.' };
   }
 
   let response: AuthResponse;
@@ -26,10 +26,10 @@ export async function loginAction(
     response = await apiAnonymous<AuthResponse>('/auth/login', 'POST', { email, password });
   } catch (err) {
     if (err instanceof ApiError && (err.status === 401 || err.status === 400)) {
-      return { error: 'Invalid email or password.' };
+      return { error: 'Email ou mot de passe invalide.' };
     }
     console.error('[loginAction] fetch failed', { apiUrl: process.env.API_URL, err });
-    return { error: 'Could not reach the API. Is it running?' };
+    return { error: 'Impossible de joindre le serveur. Réessayez.' };
   }
 
   await setSession(response.tokens, response.user);

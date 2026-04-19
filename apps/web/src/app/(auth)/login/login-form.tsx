@@ -30,7 +30,7 @@ export function LoginForm({ from }: { from: string }) {
         </div>
 
         <div>
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">Mot de passe</Label>
           <Input
             id="password"
             name="password"
@@ -58,7 +58,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="lg" fullWidth disabled={pending}>
-      {pending ? 'Signing in…' : 'Sign in'}
+      {pending ? 'Connexion…' : 'Se connecter'}
     </Button>
   );
 }

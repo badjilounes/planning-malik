@@ -32,10 +32,27 @@ export async function registerAction(
     if (err instanceof ApiError && err.status === 409) {
       return { error: 'An account with this email already exists.' };
     }
+    if (err instanceof ApiError) {
+      console.error('[registerAction] API rejected', {
+        status: err.status,
+        body: err.body,
+      });
+      const msgs = extractMessages(err.body);
+      return { error: msgs ?? `API error (${err.status}).` };
+    }
     console.error('[registerAction] fetch failed', { apiUrl: process.env.API_URL, err });
     return { error: 'Could not reach the API. Is it running?' };
   }
 
   await setSession(response.tokens, response.user);
   redirect('/tasks');
+}
+
+function extractMessages(body: unknown): string | null {
+  if (body && typeof body === 'object' && 'message' in body) {
+    const m = (body as { message: unknown }).message;
+    if (Array.isArray(m)) return m.join(', ');
+    if (typeof m === 'string') return m;
+  }
+  return null;
 }

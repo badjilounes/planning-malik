@@ -376,7 +376,7 @@ export function EventManager({
             className="w-full sm:w-auto"
           >
             <Plus className="mr-2 h-4 w-4" />
-            New Event
+            Nouvel événement
           </Button>
         </div>
       </div>
@@ -410,7 +410,7 @@ export function EventManager({
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="gap-2 whitespace-nowrap flex-shrink-0 bg-transparent">
                   <Filter className="h-4 w-4" />
-                  Colors
+                  Couleurs
                   {selectedColors.length > 0 && (
                     <Badge variant="secondary" className="ml-1 h-5 px-1.5">
                       {selectedColors.length}
@@ -419,7 +419,7 @@ export function EventManager({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48">
-                <DropdownMenuLabel>Filter by Color</DropdownMenuLabel>
+                <DropdownMenuLabel>Filtrer par couleur</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {colors.map((color) => (
                   <DropdownMenuCheckboxItem
@@ -445,7 +445,7 @@ export function EventManager({
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="gap-2 whitespace-nowrap flex-shrink-0 bg-transparent">
                   <Filter className="h-4 w-4" />
-                  Tags
+                  Étiquettes
                   {selectedTags.length > 0 && (
                     <Badge variant="secondary" className="ml-1 h-5 px-1.5">
                       {selectedTags.length}
@@ -454,7 +454,7 @@ export function EventManager({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48">
-                <DropdownMenuLabel>Filter by Tag</DropdownMenuLabel>
+                <DropdownMenuLabel>Filtrer par étiquette</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {availableTags.map((tag) => (
                   <DropdownMenuCheckboxItem
@@ -475,7 +475,7 @@ export function EventManager({
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="gap-2 whitespace-nowrap flex-shrink-0 bg-transparent">
                   <Filter className="h-4 w-4" />
-                  Categories
+                  Catégories
                   {selectedCategories.length > 0 && (
                     <Badge variant="secondary" className="ml-1 h-5 px-1.5">
                       {selectedCategories.length}
@@ -484,7 +484,7 @@ export function EventManager({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48">
-                <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
+                <DropdownMenuLabel>Filtrer par catégorie</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {categories.map((category) => (
                   <DropdownMenuCheckboxItem
@@ -510,7 +510,7 @@ export function EventManager({
                 className="gap-2 whitespace-nowrap flex-shrink-0"
               >
                 <X className="h-4 w-4" />
-                Clear Filters
+                Effacer
               </Button>
             )}
           </div>
@@ -523,7 +523,7 @@ export function EventManager({
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="gap-2 bg-transparent">
                 <Filter className="h-4 w-4" />
-                Colors
+                Couleurs
                 {selectedColors.length > 0 && (
                   <Badge variant="secondary" className="ml-1 h-5 px-1">
                     {selectedColors.length}
@@ -532,7 +532,7 @@ export function EventManager({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuLabel>Filter by Color</DropdownMenuLabel>
+              <DropdownMenuLabel>Filtrer par couleur</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {colors.map((color) => (
                 <DropdownMenuCheckboxItem
@@ -558,7 +558,7 @@ export function EventManager({
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="gap-2 bg-transparent">
                 <Filter className="h-4 w-4" />
-                Tags
+                Étiquettes
                 {selectedTags.length > 0 && (
                   <Badge variant="secondary" className="ml-1 h-5 px-1">
                     {selectedTags.length}
@@ -567,7 +567,7 @@ export function EventManager({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuLabel>Filter by Tag</DropdownMenuLabel>
+              <DropdownMenuLabel>Filtrer par étiquette</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {availableTags.map((tag) => (
                 <DropdownMenuCheckboxItem
@@ -588,7 +588,7 @@ export function EventManager({
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="gap-2 bg-transparent">
                 <Filter className="h-4 w-4" />
-                Categories
+                Catégories
                 {selectedCategories.length > 0 && (
                   <Badge variant="secondary" className="ml-1 h-5 px-1">
                     {selectedCategories.length}
@@ -597,7 +597,7 @@ export function EventManager({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
+              <DropdownMenuLabel>Filtrer par catégorie</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {categories.map((category) => (
                 <DropdownMenuCheckboxItem
@@ -624,7 +624,7 @@ export function EventManager({
 
       {hasActiveFilters && (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm text-muted-foreground">Active filters:</span>
+          <span className="text-sm text-muted-foreground">Filtres actifs :</span>
           {selectedColors.map((colorValue) => {
             const color = getColorClasses(colorValue)
             return (
@@ -767,7 +767,7 @@ export function EventManager({
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="startTime">Start Time</Label>
+                <Label htmlFor="startTime">Début</Label>
                 <Input
                   id="startTime"
                   type="datetime-local"
@@ -796,7 +796,7 @@ export function EventManager({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="endTime">End Time</Label>
+                <Label htmlFor="endTime">Fin</Label>
                 <Input
                   id="endTime"
                   type="datetime-local"
@@ -1150,10 +1150,13 @@ function MonthView({
   }
 
   return (
-    <Card className="overflow-hidden">
-      <div className="grid grid-cols-7 border-b">
+    <Card className="overflow-hidden py-0">
+      <div className="grid grid-cols-7 border-b border-border/60 bg-surface-muted/40">
         {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((day) => (
-          <div key={day} className="border-r p-2 text-center text-xs font-medium last:border-r-0 sm:text-sm">
+          <div
+            key={day}
+            className="p-2 text-center text-[11px] font-medium uppercase tracking-wide text-fg-subtle sm:text-xs"
+          >
             <span className="hidden sm:inline">{day}</span>
             <span className="sm:hidden">{day.charAt(0)}</span>
           </div>
@@ -1164,22 +1167,26 @@ function MonthView({
           const dayEvents = getEventsForDay(day)
           const isCurrentMonth = day.getMonth() === currentDate.getMonth()
           const isToday = day.toDateString() === new Date().toDateString()
+          const rowIndex = Math.floor(index / 7)
 
           return (
             <div
               key={index}
               className={cn(
-                "min-h-20 border-b border-r p-1 transition-colors last:border-r-0 sm:min-h-24 sm:p-2",
-                !isCurrentMonth && "bg-muted/30",
-                "hover:bg-accent/50",
+                "min-h-20 p-1 transition-colors sm:min-h-24 sm:p-2",
+                rowIndex > 0 && "border-t border-border/50",
+                !isCurrentMonth && "text-fg-subtle/70",
+                "hover:bg-surface-muted/40",
               )}
               onDragOver={(e) => e.preventDefault()}
               onDrop={() => onDrop(day)}
             >
               <div
                 className={cn(
-                  "mb-1 flex h-5 w-5 items-center justify-center rounded-full text-xs sm:h-6 sm:w-6 sm:text-sm",
-                  isToday && "bg-primary text-primary-foreground font-semibold",
+                  "mb-1 flex h-6 w-6 items-center justify-center rounded-full text-[11px] sm:h-7 sm:w-7 sm:text-sm",
+                  isToday
+                    ? "bg-brand-600 text-white font-semibold shadow-sm"
+                    : !isCurrentMonth && "text-fg-subtle/60",
                 )}
               >
                 {day.getDate()}
@@ -1197,7 +1204,7 @@ function MonthView({
                   />
                 ))}
                 {dayEvents.length > 3 && (
-                  <div className="text-[10px] text-muted-foreground sm:text-xs">+{dayEvents.length - 3} more</div>
+                  <div className="text-[10px] text-fg-subtle sm:text-xs">+{dayEvents.length - 3}</div>
                 )}
               </div>
             </div>
@@ -1251,28 +1258,39 @@ function WeekView({
   }
 
   return (
-    <Card className="overflow-auto">
-      <div className="grid grid-cols-8 border-b">
-        <div className="border-r p-2 text-center text-xs font-medium sm:text-sm">Heure</div>
-        {weekDays.map((day) => (
-          <div
-            key={day.toISOString()}
-            className="border-r p-2 text-center text-xs font-medium last:border-r-0 sm:text-sm"
-          >
-            <div className="hidden sm:block">{day.toLocaleDateString("fr-FR", { weekday: "short" })}</div>
-            <div className="sm:hidden">{day.toLocaleDateString("fr-FR", { weekday: "narrow" })}</div>
-            <div className="text-[10px] text-muted-foreground sm:text-xs">
-              {day.toLocaleDateString("fr-FR", { month: "short", day: "numeric" })}
+    <Card className="overflow-auto py-0">
+      <div className="grid grid-cols-8 border-b border-border/60 bg-surface-muted/40">
+        <div className="p-2 text-center text-[11px] font-medium uppercase tracking-wide text-fg-subtle sm:text-xs">
+          Heure
+        </div>
+        {weekDays.map((day) => {
+          const isToday = day.toDateString() === new Date().toDateString()
+          return (
+            <div key={day.toISOString()} className="p-2 text-center text-xs sm:text-sm">
+              <div className="hidden text-[11px] font-medium uppercase tracking-wide text-fg-subtle sm:block">
+                {day.toLocaleDateString("fr-FR", { weekday: "short" })}
+              </div>
+              <div className="text-[11px] font-medium uppercase text-fg-subtle sm:hidden">
+                {day.toLocaleDateString("fr-FR", { weekday: "narrow" })}
+              </div>
+              <div
+                className={cn(
+                  "mx-auto mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full text-[11px] sm:h-7 sm:w-7 sm:text-xs",
+                  isToday && "bg-brand-600 text-white font-semibold shadow-sm",
+                )}
+              >
+                {day.getDate()}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
       <div className="grid grid-cols-8">
         {hours.map((hour) => (
           <>
             <div
               key={`time-${hour}`}
-              className="border-b border-r p-1 text-[10px] text-muted-foreground sm:p-2 sm:text-xs"
+              className="border-t border-border/50 p-1 text-[10px] text-fg-subtle sm:p-2 sm:text-xs"
             >
               {hour.toString().padStart(2, "0")}:00
             </div>
@@ -1281,7 +1299,7 @@ function WeekView({
               return (
                 <div
                   key={`${day.toISOString()}-${hour}`}
-                  className="min-h-12 border-b border-r p-0.5 transition-colors hover:bg-accent/50 last:border-r-0 sm:min-h-16 sm:p-1"
+                  className="min-h-12 border-t border-l border-border/40 p-0.5 transition-colors hover:bg-surface-muted/40 sm:min-h-16 sm:p-1"
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={() => onDrop(day, hour)}
                 >
@@ -1342,21 +1360,21 @@ function DayView({
   }
 
   return (
-    <Card className="overflow-auto">
+    <Card className="overflow-auto py-0">
       <div className="space-y-0">
         {hours.map((hour) => {
           const hourEvents = getEventsForHour(hour)
           return (
             <div
               key={hour}
-              className="flex border-b last:border-b-0"
+              className="flex border-b border-border/50 last:border-b-0"
               onDragOver={(e) => e.preventDefault()}
               onDrop={() => onDrop(currentDate, hour)}
             >
-              <div className="w-14 flex-shrink-0 border-r p-2 text-xs text-muted-foreground sm:w-20 sm:p-3 sm:text-sm">
+              <div className="w-14 flex-shrink-0 p-2 text-[11px] text-fg-subtle sm:w-20 sm:p-3 sm:text-xs">
                 {hour.toString().padStart(2, "0")}:00
               </div>
-              <div className="min-h-16 flex-1 p-1 transition-colors hover:bg-accent/50 sm:min-h-20 sm:p-2">
+              <div className="min-h-16 flex-1 border-l border-border/40 p-1 transition-colors hover:bg-surface-muted/40 sm:min-h-20 sm:p-2">
                 <div className="space-y-2">
                   {hourEvents.map((event) => (
                     <EventCard
@@ -1379,7 +1397,9 @@ function DayView({
   )
 }
 
-// List View Component
+// List View Component — iOS-agenda style: sticky-feeling date headers
+// with weekday + date + ISO week number, compact rows separated by hair
+// lines, and a colored accent bar on each event tile.
 function ListView({
   events,
   onEventClick,
@@ -1393,93 +1413,126 @@ function ListView({
 
   const groupedEvents = sortedEvents.reduce(
     (acc, event) => {
-      const dateKey = event.startTime.toLocaleDateString("fr-FR", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
+      const start = event.startTime
+      const dateKey = start.toISOString().slice(0, 10)
       if (!acc[dateKey]) {
-        acc[dateKey] = []
+        acc[dateKey] = { date: new Date(start.getFullYear(), start.getMonth(), start.getDate()), items: [] }
       }
-      acc[dateKey].push(event)
+      acc[dateKey].items.push(event)
       return acc
     },
-    {} as Record<string, Event[]>,
+    {} as Record<string, { date: Date; items: Event[] }>,
   )
 
+  const groups = Object.values(groupedEvents).sort((a, b) => a.date.getTime() - b.date.getTime())
+
   return (
-    <Card className="p-3 sm:p-4">
-      <div className="space-y-6">
-        {Object.entries(groupedEvents).map(([date, dateEvents]) => (
-          <div key={date} className="space-y-3">
-            <h3 className="text-xs font-semibold text-muted-foreground sm:text-sm">{date}</h3>
-            <div className="space-y-2">
-              {dateEvents.map((event) => {
-                const colorClasses = getColorClasses(event.color)
-                return (
-                  <div
-                    key={event.id}
-                    onClick={() => onEventClick(event)}
-                    className="group cursor-pointer rounded-lg border bg-card p-3 transition-all hover:shadow-md hover:scale-[1.01] animate-in fade-in slide-in-from-bottom-2 duration-300 sm:p-4"
+    <Card className="overflow-hidden py-0">
+      {groups.length === 0 ? (
+        <div className="py-12 text-center text-sm text-fg-subtle sm:text-base">
+          Aucun événement
+        </div>
+      ) : (
+        <div>
+          {groups.map(({ date, items }, idx) => {
+            const isToday = date.toDateString() === new Date().toDateString()
+            return (
+              <section key={date.toISOString()} className={cn(idx > 0 && "border-t border-border/50")}>
+                <header
+                  className={cn(
+                    "flex items-baseline justify-between gap-3 bg-surface-muted/40 px-4 py-2.5 sm:px-5",
+                    isToday && "bg-brand-50/60 dark:bg-brand-900/20",
+                  )}
+                >
+                  <h3
+                    className={cn(
+                      "text-sm font-semibold tracking-tight sm:text-base",
+                      isToday ? "text-brand-700 dark:text-brand-300" : "text-fg",
+                    )}
                   >
-                    <div className="flex items-start gap-2 sm:gap-3">
-                      <div className={cn("mt-1 h-2.5 w-2.5 rounded-full sm:h-3 sm:w-3", colorClasses.bg)} />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                          <div className="min-w-0">
-                            <h4 className="font-semibold text-sm group-hover:text-primary transition-colors sm:text-base truncate">
-                              {event.title}
-                            </h4>
+                    <span className="capitalize">
+                      {date.toLocaleDateString("fr-FR", { weekday: "long" })}
+                    </span>{" "}
+                    <span className="font-normal text-fg-muted">
+                      — {date.toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
+                    </span>
+                  </h3>
+                  <span className="text-[11px] font-medium uppercase tracking-wide text-fg-subtle">
+                    S{getIsoWeek(date)}
+                  </span>
+                </header>
+                <ul className="divide-y divide-border/50">
+                  {items.map((event) => {
+                    const colorClasses = getColorClasses(event.color)
+                    return (
+                      <li key={event.id}>
+                        <button
+                          type="button"
+                          onClick={() => onEventClick(event)}
+                          className="group flex w-full items-stretch gap-3 bg-surface-elevated px-4 py-3 text-left transition-colors hover:bg-surface-muted/40 sm:px-5"
+                        >
+                          <span
+                            className={cn("w-1 flex-shrink-0 rounded-full", colorClasses.bg)}
+                            aria-hidden
+                          />
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-start justify-between gap-3">
+                              <h4 className="truncate text-sm font-semibold text-fg sm:text-base">
+                                {event.title}
+                              </h4>
+                              <div className="flex-shrink-0 text-right text-[11px] leading-tight text-fg-muted tabular-nums sm:text-xs">
+                                <div>
+                                  {event.startTime.toLocaleTimeString("fr-FR", {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })}
+                                </div>
+                                <div>
+                                  {event.endTime.toLocaleTimeString("fr-FR", {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })}
+                                </div>
+                              </div>
+                            </div>
                             {event.description && (
-                              <p className="mt-1 text-xs text-muted-foreground sm:text-sm line-clamp-2">
+                              <p className="mt-0.5 line-clamp-1 text-xs text-fg-muted sm:text-sm">
                                 {event.description}
                               </p>
                             )}
-                          </div>
-                          <div className="flex flex-wrap gap-1">
-                            {event.category && (
-                              <Badge variant="secondary" className="text-xs">
-                                {event.category}
-                              </Badge>
+                            {(event.category || (event.tags && event.tags.length > 0)) && (
+                              <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                                {event.category && (
+                                  <Badge variant="secondary" className="h-5 text-[10px] sm:text-xs">
+                                    {event.category}
+                                  </Badge>
+                                )}
+                                {event.tags?.map((tag) => (
+                                  <Badge key={tag} variant="outline" className="h-5 text-[10px] sm:text-xs">
+                                    {tag}
+                                  </Badge>
+                                ))}
+                              </div>
                             )}
                           </div>
-                        </div>
-                        <div className="mt-2 flex flex-wrap items-center gap-2 text-[10px] text-muted-foreground sm:gap-4 sm:text-xs">
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            {event.startTime.toLocaleTimeString("fr-FR", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}{" "}
-                            -{" "}
-                            {event.endTime.toLocaleTimeString("fr-FR", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
-                          </div>
-                          {event.tags && event.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-1">
-                              {event.tags.map((tag) => (
-                                <Badge key={tag} variant="outline" className="text-[10px] h-4 sm:text-xs sm:h-5">
-                                  {tag}
-                                </Badge>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        ))}
-        {sortedEvents.length === 0 && (
-          <div className="py-12 text-center text-sm text-muted-foreground sm:text-base">No events found</div>
-        )}
-      </div>
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </section>
+            )
+          })}
+        </div>
+      )}
     </Card>
   )
+}
+
+function getIsoWeek(date: Date): number {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+  const dayNum = d.getUTCDay() || 7
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum)
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
+  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7)
 }

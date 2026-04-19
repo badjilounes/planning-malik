@@ -8,6 +8,10 @@ tmp/
 out-tsc/
 *.tsbuildinfo
 
+# next.js
+.next/
+next-env.d.ts.orig
+
 # nx
 .nx/cache
 .nx/workspace-data

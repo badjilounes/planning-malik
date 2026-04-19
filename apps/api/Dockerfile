@@ -21,7 +21,6 @@ FROM node:20-slim AS runner
 
 WORKDIR /app
 ENV NODE_ENV=production
-ENV PORT=3333
 
 RUN apt-get update -y && apt-get install -y openssl curl && rm -rf /var/lib/apt/lists/*
 
@@ -30,9 +29,9 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/libs/data-access/prisma ./libs/data-access/prisma
 
-EXPOSE 3333
+EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
-  CMD curl -fs http://localhost:${PORT}/api/health || exit 1
+  CMD curl -fs "http://localhost:${PORT:-3333}/api/health" || exit 1
 
 CMD ["node", "apps/api/dist/main.js"]

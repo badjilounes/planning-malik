@@ -29,7 +29,7 @@ export function ExceptionForm({
     <Card className="p-6">
       <form action={formAction} className="flex flex-col gap-5">
         <div>
-          <Label htmlFor="title">Title (leave empty to inherit)</Label>
+          <Label htmlFor="title">Titre (vide = hérité de la série)</Label>
           <Input
             id="title"
             name="title"
@@ -45,14 +45,14 @@ export function ExceptionForm({
             id="description"
             name="description"
             defaultValue={task.description ?? ''}
-            placeholder="Inherits from the series unless you change it."
+            placeholder="Hérité de la série sauf si vous modifiez."
             rows={3}
           />
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div>
-            <Label htmlFor="dueDate">Due date / time</Label>
+            <Label htmlFor="dueDate">Date et heure</Label>
             <Input
               id="dueDate"
               name="dueDate"
@@ -61,20 +61,20 @@ export function ExceptionForm({
             />
           </div>
           <div>
-            <Label htmlFor="priority">Priority</Label>
+            <Label htmlFor="priority">Priorité</Label>
             <Select id="priority" name="priority" defaultValue={task.priority}>
-              <option value={TaskPriority.LOW}>Low</option>
-              <option value={TaskPriority.MEDIUM}>Medium</option>
-              <option value={TaskPriority.HIGH}>High</option>
-              <option value={TaskPriority.URGENT}>Urgent</option>
+              <option value={TaskPriority.LOW}>Faible</option>
+              <option value={TaskPriority.MEDIUM}>Moyenne</option>
+              <option value={TaskPriority.HIGH}>Haute</option>
+              <option value={TaskPriority.URGENT}>Urgente</option>
             </Select>
           </div>
           <div>
-            <Label htmlFor="status">Status</Label>
+            <Label htmlFor="status">Statut</Label>
             <Select id="status" name="status" defaultValue={task.status}>
-              <option value={TaskStatus.TODO}>To do</option>
-              <option value={TaskStatus.IN_PROGRESS}>In progress</option>
-              <option value={TaskStatus.DONE}>Done</option>
+              <option value={TaskStatus.TODO}>À faire</option>
+              <option value={TaskStatus.IN_PROGRESS}>En cours</option>
+              <option value={TaskStatus.DONE}>Terminée</option>
             </Select>
           </div>
         </div>
@@ -88,7 +88,7 @@ export function ExceptionForm({
         <div className="flex justify-end gap-2">
           <Link href="/tasks">
             <Button type="button" variant="secondary" size="md">
-              Cancel
+              Annuler
             </Button>
           </Link>
           <SubmitButton />
@@ -102,7 +102,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="md" disabled={pending}>
-      {pending ? 'Saving…' : 'Save this occurrence'}
+      {pending ? 'Enregistrement…' : 'Enregistrer cette occurrence'}
     </Button>
   );
 }

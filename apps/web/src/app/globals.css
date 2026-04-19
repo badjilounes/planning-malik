@@ -3,37 +3,32 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Planning Malik design tokens (custom). */
+  /* Planning Malik palette (source of truth for the whole app). */
   --surface: hsl(0 0% 100%);
   --surface-muted: hsl(220 14% 96%);
   --surface-elevated: hsl(0 0% 100%);
   --fg: hsl(222 47% 11%);
   --fg-muted: hsl(220 9% 46%);
   --fg-subtle: hsl(220 9% 65%);
-  --border: hsl(220 13% 91%);
+  --border-color: hsl(220 13% 91%);
 
-  /* shadcn/ui tokens (neutral, new-york v4). Kept so shadcn primitives
-     pulled in from 21st.dev (event-manager) render correctly alongside
-     our own components. */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
+  --brand-50: #f4f3ff;
+  --brand-100: #ebe9fe;
+  --brand-200: #d9d6fe;
+  --brand-300: #bdb4fd;
+  --brand-400: #9b8afb;
+  --brand-500: #7c5cf8;
+  --brand-600: #6b42ef;
+  --brand-700: #5a30db;
+  --brand-800: #4b29b7;
+  --brand-900: #3f2596;
+
+  --priority-low: #94a3b8;
+  --priority-medium: #60a5fa;
+  --priority-high: #f59e0b;
+  --priority-urgent: #ef4444;
+
+  --radius: 0.75rem;
 }
 
 .dark {
@@ -43,26 +38,7 @@
   --fg: hsl(210 20% 98%);
   --fg-muted: hsl(215 16% 70%);
   --fg-subtle: hsl(217 10% 50%);
-  --border: hsl(222 18% 18%);
-
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border-color: hsl(222 18% 18%);
 }
 
 @theme inline {
@@ -75,49 +51,50 @@
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
   --color-fg-subtle: var(--fg-subtle);
-  --color-border: var(--border);
+  --color-border: var(--border-color);
 
-  --color-brand-50: #f4f3ff;
-  --color-brand-100: #ebe9fe;
-  --color-brand-200: #d9d6fe;
-  --color-brand-300: #bdb4fd;
-  --color-brand-400: #9b8afb;
-  --color-brand-500: #7c5cf8;
-  --color-brand-600: #6b42ef;
-  --color-brand-700: #5a30db;
-  --color-brand-800: #4b29b7;
-  --color-brand-900: #3f2596;
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
 
-  --color-priority-low: #94a3b8;
-  --color-priority-medium: #60a5fa;
-  --color-priority-high: #f59e0b;
-  --color-priority-urgent: #ef4444;
+  --color-priority-low: var(--priority-low);
+  --color-priority-medium: var(--priority-medium);
+  --color-priority-high: var(--priority-high);
+  --color-priority-urgent: var(--priority-urgent);
 
-  /* shadcn tokens (exposed as Tailwind utilities: bg-background, text-primary, etc.) */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  /* shadcn/ui tokens — mapped onto the Planning Malik palette so components
+     pulled from 21st.dev (event-manager, dialogs, etc.) stay on-brand. */
+  --color-background: var(--surface);
+  --color-foreground: var(--fg);
+  --color-card: var(--surface-elevated);
+  --color-card-foreground: var(--fg);
+  --color-popover: var(--surface-elevated);
+  --color-popover-foreground: var(--fg);
+  --color-primary: var(--brand-600);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--surface-muted);
+  --color-secondary-foreground: var(--fg);
+  --color-muted: var(--surface-muted);
+  --color-muted-foreground: var(--fg-muted);
+  --color-accent: var(--surface-muted);
+  --color-accent-foreground: var(--fg);
+  --color-destructive: var(--priority-urgent);
+  --color-destructive-foreground: #ffffff;
+  --color-input: var(--border-color);
+  --color-ring: var(--brand-500);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: 14px;
-  --radius-2xl: 20px;
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
 
   --shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 16px -4px rgba(16, 24, 40, 0.06);
   --shadow-pop: 0 8px 24px -8px rgba(16, 24, 40, 0.16);

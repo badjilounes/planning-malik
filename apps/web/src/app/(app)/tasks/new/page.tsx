@@ -12,7 +12,7 @@ export default function NewTaskPage() {
         <ArrowLeft className="h-4 w-4" />
         Back to tasks
       </Link>
-      <h1 className="mb-6 text-2xl font-semibold tracking-tight">New task</h1>
+      <h1 className="mb-6 text-2xl font-semibold tracking-tight">Nouvelle tâche</h1>
       <TaskForm />
     </div>
   );

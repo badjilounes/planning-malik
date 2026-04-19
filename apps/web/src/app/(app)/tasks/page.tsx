@@ -19,16 +19,15 @@ export default async function TasksPage() {
     <div className="mx-auto max-w-4xl">
       <div className="mb-6 flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Tasks</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Tâches</h1>
           <p className="mt-1 text-sm text-fg-muted">
-            {occurrences.length} occurrence{occurrences.length === 1 ? '' : 's'} in the next{' '}
-            {RANGE_DAYS} days.
+            {occurrences.length} tâche{occurrences.length === 1 ? '' : 's'} dans les {RANGE_DAYS} prochains jours.
           </p>
         </div>
         <Link href="/tasks/new">
           <Button size="md">
             <Plus className="h-4 w-4" />
-            New task
+            Nouvelle tâche
           </Button>
         </Link>
       </div>

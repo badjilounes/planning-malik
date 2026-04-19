@@ -59,7 +59,7 @@ export function TaskCard({ occurrence }: { occurrence: TaskOccurrenceDto }) {
             {occurrence.title}
           </p>
           {occurrence.isRecurring && (
-            <span title={occurrence.isException ? 'Edited occurrence' : 'Recurring'}>
+            <span title={occurrence.isException ? 'Occurrence modifiée' : 'Récurrente'}>
               <Repeat
                 className={cn(
                   'h-3.5 w-3.5 shrink-0',
@@ -118,8 +118,8 @@ function OccurrenceMenu({
     if (
       confirm(
         occurrence.isRecurring
-          ? 'Delete the entire series? All occurrences will be removed.'
-          : 'Delete this task?',
+          ? 'Supprimer toute la série ? Toutes les occurrences seront retirées.'
+          : 'Supprimer cette tâche ?',
       )
     ) {
       startTransition(() => {
@@ -133,7 +133,7 @@ function OccurrenceMenu({
     <div className="relative">
       <button
         type="button"
-        aria-label="Open task menu"
+        aria-label="Ouvrir le menu de la tâche"
         onClick={() => onOpenChange(!open)}
         className="flex h-8 w-8 items-center justify-center rounded-lg text-fg-subtle opacity-0 transition-opacity hover:bg-surface-muted hover:text-fg group-hover:opacity-100 data-[open=true]:opacity-100"
         data-open={open}
@@ -151,7 +151,7 @@ function OccurrenceMenu({
           />
           <div className="absolute right-0 top-9 z-20 w-56 animate-fade-in overflow-hidden rounded-xl border border-border bg-surface-elevated shadow-pop">
             <MenuItem href={`/tasks/${occurrence.taskId}/edit`} onClick={close}>
-              Edit {occurrence.isRecurring ? 'series' : 'task'}
+              {occurrence.isRecurring ? 'Modifier la série' : 'Modifier la tâche'}
             </MenuItem>
             {occurrence.isRecurring && (
               <>
@@ -161,19 +161,19 @@ function OccurrenceMenu({
                   )}/edit`}
                   onClick={close}
                 >
-                  Edit this occurrence
+                  Modifier cette occurrence
                 </MenuItem>
-                <MenuButton onClick={onSkip}>Skip this occurrence</MenuButton>
+                <MenuButton onClick={onSkip}>Ignorer cette occurrence</MenuButton>
                 {occurrence.isException && (
                   <MenuButton onClick={onClearException}>
-                    Restore original occurrence
+                    Restaurer l&apos;occurrence initiale
                   </MenuButton>
                 )}
               </>
             )}
             <div className="border-t border-border" />
             <MenuButton onClick={onDelete} destructive>
-              Delete {occurrence.isRecurring ? 'series' : 'task'}
+              {occurrence.isRecurring ? 'Supprimer la série' : 'Supprimer la tâche'}
             </MenuButton>
           </div>
         </>

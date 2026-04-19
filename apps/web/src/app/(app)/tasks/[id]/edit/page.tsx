@@ -26,13 +26,13 @@ export default async function EditTaskPage({
         className="mb-4 inline-flex items-center gap-1.5 text-sm text-fg-muted hover:text-fg"
       >
         <ArrowLeft className="h-4 w-4" />
-        Back to tasks
+        Retour aux tâches
       </Link>
-      <h1 className="mb-2 text-2xl font-semibold tracking-tight">Edit task</h1>
+      <h1 className="mb-2 text-2xl font-semibold tracking-tight">Modifier la tâche</h1>
       {task.recurrence && (
         <p className="mb-6 text-sm text-fg-muted">
-          Changes apply to the entire series. To edit a single occurrence, use the menu on
-          that occurrence instead.
+          Les modifications s&apos;appliquent à toute la série. Pour modifier une
+          occurrence précise, utilisez le menu sur cette occurrence.
         </p>
       )}
       <TaskForm task={task} />

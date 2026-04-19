@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { CalendarDays, ListChecks, LogOut } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
+import { MobileNav } from '@/components/mobile-nav';
 import { getSessionUser } from '@/lib/session';
 import { logoutAction } from '@/app/(app)/logout/actions';
 
@@ -13,15 +14,18 @@ export async function AppShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen bg-surface">
       <Sidebar />
       <div className="flex flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-border bg-surface/85 px-4 backdrop-blur md:px-6">
-          <div className="text-sm text-fg-muted">
-            {user?.displayName ? (
-              <>
-                Bonjour, <span className="text-fg">{user.displayName}</span>
-              </>
-            ) : (
-              user?.email
-            )}
+        <header className="sticky top-0 z-20 flex h-14 items-center justify-between gap-2 border-b border-border bg-surface/85 px-4 backdrop-blur md:px-6">
+          <div className="flex items-center gap-2">
+            <MobileNav />
+            <div className="text-sm text-fg-muted">
+              {user?.displayName ? (
+                <>
+                  Bonjour, <span className="text-fg">{user.displayName}</span>
+                </>
+              ) : (
+                user?.email
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
@@ -39,7 +43,6 @@ export async function AppShell({ children }: { children: ReactNode }) {
           </div>
         </header>
         <main className="flex-1 px-4 py-6 md:px-6 md:py-8">{children}</main>
-        <MobileNav />
       </div>
     </div>
   );
@@ -57,19 +60,14 @@ function Sidebar() {
       </Link>
 
       <nav className="flex flex-col gap-0.5">
-        <NavLink href="/calendar" icon={<CalendarDays className="h-4 w-4" />} label="Calendrier" />
+        <NavLink
+          href="/calendar"
+          icon={<CalendarDays className="h-4 w-4" />}
+          label="Calendrier"
+        />
         <NavLink href="/tasks" icon={<ListChecks className="h-4 w-4" />} label="Tâches" />
       </nav>
     </aside>
-  );
-}
-
-function MobileNav() {
-  return (
-    <nav className="sticky bottom-0 z-20 flex h-14 items-center justify-around border-t border-border bg-surface/95 backdrop-blur md:hidden">
-      <MobileNavLink href="/calendar" icon={<CalendarDays className="h-5 w-5" />} label="Calendrier" />
-      <MobileNavLink href="/tasks" icon={<ListChecks className="h-5 w-5" />} label="Tâches" />
-    </nav>
   );
 }
 
@@ -78,26 +76,6 @@ function NavLink({ href, icon, label }: { href: string; icon: ReactNode; label: 
     <Link
       href={href}
       className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-surface-elevated hover:text-fg"
-    >
-      {icon}
-      {label}
-    </Link>
-  );
-}
-
-function MobileNavLink({
-  href,
-  icon,
-  label,
-}: {
-  href: string;
-  icon: ReactNode;
-  label: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="flex flex-1 flex-col items-center gap-0.5 text-[11px] font-medium text-fg-muted hover:text-fg"
     >
       {icon}
       {label}

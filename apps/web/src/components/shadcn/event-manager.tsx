@@ -263,31 +263,29 @@ export function EventManager({
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
           <h2 className="text-xl font-semibold sm:text-2xl">
             {view === "month" &&
-              currentDate.toLocaleDateString("en-US", {
+              currentDate.toLocaleDateString("fr-FR", {
                 month: "long",
                 year: "numeric",
               })}
             {view === "week" &&
-              `Week of ${currentDate.toLocaleDateString("en-US", {
+              `Semaine du ${currentDate.toLocaleDateString("fr-FR", {
                 month: "short",
                 day: "numeric",
               })}`}
             {view === "day" &&
-              currentDate.toLocaleDateString("en-US", {
+              currentDate.toLocaleDateString("fr-FR", {
                 weekday: "long",
                 month: "long",
                 day: "numeric",
                 year: "numeric",
               })}
-            {view === "list" && "All Events"}
+            {view === "list" && "Tous les événements"}
           </h2>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="icon" onClick={() => navigateDate("prev")} className="h-8 w-8">
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <Button variant="outline" size="sm" onClick={() => setCurrentDate(new Date())}>
-              Today
-            </Button>
+            <Button variant="outline" size="sm" onClick={() => setCurrentDate(new Date())}>Aujourd'hui</Button>
             <Button variant="outline" size="icon" onClick={() => navigateDate("next")} className="h-8 w-8">
               <ChevronRight className="h-4 w-4" />
             </Button>
@@ -305,25 +303,25 @@ export function EventManager({
                 <SelectItem value="month">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    Month View
+                    Vue mois
                   </div>
                 </SelectItem>
                 <SelectItem value="week">
                   <div className="flex items-center gap-2">
                     <Grid3x3 className="h-4 w-4" />
-                    Week View
+                    Vue semaine
                   </div>
                 </SelectItem>
                 <SelectItem value="day">
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4" />
-                    Day View
+                    Vue jour
                   </div>
                 </SelectItem>
                 <SelectItem value="list">
                   <div className="flex items-center gap-2">
                     <List className="h-4 w-4" />
-                    List View
+                    Vue liste
                   </div>
                 </SelectItem>
               </SelectContent>
@@ -339,7 +337,7 @@ export function EventManager({
               className="h-8"
             >
               <Calendar className="h-4 w-4" />
-              <span className="ml-1">Month</span>
+              <span className="ml-1">Mois</span>
             </Button>
             <Button
               variant={view === "week" ? "secondary" : "ghost"}
@@ -348,7 +346,7 @@ export function EventManager({
               className="h-8"
             >
               <Grid3x3 className="h-4 w-4" />
-              <span className="ml-1">Week</span>
+              <span className="ml-1">Semaine</span>
             </Button>
             <Button
               variant={view === "day" ? "secondary" : "ghost"}
@@ -357,7 +355,7 @@ export function EventManager({
               className="h-8"
             >
               <Clock className="h-4 w-4" />
-              <span className="ml-1">Day</span>
+              <span className="ml-1">Jour</span>
             </Button>
             <Button
               variant={view === "list" ? "secondary" : "ghost"}
@@ -366,7 +364,7 @@ export function EventManager({
               className="h-8"
             >
               <List className="h-4 w-4" />
-              <span className="ml-1">List</span>
+              <span className="ml-1">Liste</span>
             </Button>
           </div>
 
@@ -387,7 +385,7 @@ export function EventManager({
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search events..."
+            placeholder="Rechercher…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-9"
@@ -619,9 +617,7 @@ export function EventManager({
 
           {hasActiveFilters && (
             <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-2">
-              <X className="h-4 w-4" />
-              Clear
-            </Button>
+              <X className="h-4 w-4" />Effacer</Button>
           )}
         </div>
       </div>
@@ -730,15 +726,15 @@ export function EventManager({
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{isCreating ? "Create Event" : "Event Details"}</DialogTitle>
+            <DialogTitle>{isCreating ? "Nouvel événement" : "Détails de l'événement"}</DialogTitle>
             <DialogDescription>
-              {isCreating ? "Add a new event to your calendar" : "View and edit event details"}
+              {isCreating ? "Ajouter un événement au planning" : "Voir et modifier les détails"}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="title">Title</Label>
+              <Label htmlFor="title">Titre</Label>
               <Input
                 id="title"
                 value={isCreating ? newEvent.title : selectedEvent?.title}
@@ -747,7 +743,7 @@ export function EventManager({
                     ? setNewEvent((prev) => ({ ...prev, title: e.target.value }))
                     : setSelectedEvent((prev) => (prev ? { ...prev, title: e.target.value } : null))
                 }
-                placeholder="Event title"
+                placeholder="Titre de l'événement"
               />
             </div>
 
@@ -764,7 +760,7 @@ export function EventManager({
                       }))
                     : setSelectedEvent((prev) => (prev ? { ...prev, description: e.target.value } : null))
                 }
-                placeholder="Event description"
+                placeholder="Description de l'événement"
                 rows={3}
               />
             </div>
@@ -829,7 +825,7 @@ export function EventManager({
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="category">Category</Label>
+                <Label htmlFor="category">Catégorie</Label>
                 <Select
                   value={isCreating ? newEvent.category : selectedEvent?.category}
                   onValueChange={(value) =>
@@ -839,7 +835,7 @@ export function EventManager({
                   }
                 >
                   <SelectTrigger id="category">
-                    <SelectValue placeholder="Select category" />
+                    <SelectValue placeholder="Choisir une catégorie" />
                   </SelectTrigger>
                   <SelectContent>
                     {categories.map((cat) => (
@@ -852,7 +848,7 @@ export function EventManager({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="color">Color</Label>
+                <Label htmlFor="color">Couleur</Label>
                 <Select
                   value={isCreating ? newEvent.color : selectedEvent?.color}
                   onValueChange={(value) =>
@@ -862,7 +858,7 @@ export function EventManager({
                   }
                 >
                   <SelectTrigger id="color">
-                    <SelectValue placeholder="Select color" />
+                    <SelectValue placeholder="Choisir une couleur" />
                   </SelectTrigger>
                   <SelectContent>
                     {colors.map((color) => (
@@ -879,7 +875,7 @@ export function EventManager({
             </div>
 
             <div className="space-y-2">
-              <Label>Tags</Label>
+              <Label>Étiquettes</Label>
               <div className="flex flex-wrap gap-2">
                 {availableTags.map((tag) => {
                   const isSelected = isCreating ? newEvent.tags?.includes(tag) : selectedEvent?.tags?.includes(tag)
@@ -900,9 +896,7 @@ export function EventManager({
 
           <DialogFooter>
             {!isCreating && (
-              <Button variant="destructive" onClick={() => selectedEvent && handleDeleteEvent(selectedEvent.id)}>
-                Delete
-              </Button>
+              <Button variant="destructive" onClick={() => selectedEvent && handleDeleteEvent(selectedEvent.id)}>Supprimer</Button>
             )}
             <Button
               variant="outline"
@@ -911,11 +905,9 @@ export function EventManager({
                 setIsCreating(false)
                 setSelectedEvent(null)
               }}
-            >
-              Cancel
-            </Button>
+            >Annuler</Button>
             <Button onClick={isCreating ? handleCreateEvent : handleUpdateEvent}>
-              {isCreating ? "Create" : "Save"}
+              {isCreating ? "Créer" : "Enregistrer"}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -944,7 +936,7 @@ function EventCard({
   const colorClasses = getColorClasses(event.color)
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString("en-US", {
+    return date.toLocaleTimeString("fr-FR", {
       hour: "2-digit",
       minute: "2-digit",
     })
@@ -1136,7 +1128,7 @@ function MonthView({
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
   const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)
   const startDate = new Date(firstDayOfMonth)
-  startDate.setDate(startDate.getDate() - startDate.getDay())
+  startDate.setDate(startDate.getDate() - ((startDate.getDay() + 6) % 7))
 
   const days = []
   const currentDay = new Date(startDate)
@@ -1160,7 +1152,7 @@ function MonthView({
   return (
     <Card className="overflow-hidden">
       <div className="grid grid-cols-7 border-b">
-        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+        {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((day) => (
           <div key={day} className="border-r p-2 text-center text-xs font-medium last:border-r-0 sm:text-sm">
             <span className="hidden sm:inline">{day}</span>
             <span className="sm:hidden">{day.charAt(0)}</span>
@@ -1235,7 +1227,7 @@ function WeekView({
   getColorClasses: (color: string) => { bg: string; text: string }
 }) {
   const startOfWeek = new Date(currentDate)
-  startOfWeek.setDate(currentDate.getDay())
+  startOfWeek.setDate(currentDate.getDate() - ((currentDate.getDay() + 6) % 7))
 
   const weekDays = Array.from({ length: 7 }, (_, i) => {
     const day = new Date(startOfWeek)
@@ -1261,16 +1253,16 @@ function WeekView({
   return (
     <Card className="overflow-auto">
       <div className="grid grid-cols-8 border-b">
-        <div className="border-r p-2 text-center text-xs font-medium sm:text-sm">Time</div>
+        <div className="border-r p-2 text-center text-xs font-medium sm:text-sm">Heure</div>
         {weekDays.map((day) => (
           <div
             key={day.toISOString()}
             className="border-r p-2 text-center text-xs font-medium last:border-r-0 sm:text-sm"
           >
-            <div className="hidden sm:block">{day.toLocaleDateString("en-US", { weekday: "short" })}</div>
-            <div className="sm:hidden">{day.toLocaleDateString("en-US", { weekday: "narrow" })}</div>
+            <div className="hidden sm:block">{day.toLocaleDateString("fr-FR", { weekday: "short" })}</div>
+            <div className="sm:hidden">{day.toLocaleDateString("fr-FR", { weekday: "narrow" })}</div>
             <div className="text-[10px] text-muted-foreground sm:text-xs">
-              {day.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+              {day.toLocaleDateString("fr-FR", { month: "short", day: "numeric" })}
             </div>
           </div>
         ))}
@@ -1401,7 +1393,7 @@ function ListView({
 
   const groupedEvents = sortedEvents.reduce(
     (acc, event) => {
-      const dateKey = event.startTime.toLocaleDateString("en-US", {
+      const dateKey = event.startTime.toLocaleDateString("fr-FR", {
         weekday: "long",
         year: "numeric",
         month: "long",
@@ -1456,12 +1448,12 @@ function ListView({
                         <div className="mt-2 flex flex-wrap items-center gap-2 text-[10px] text-muted-foreground sm:gap-4 sm:text-xs">
                           <div className="flex items-center gap-1">
                             <Clock className="h-3 w-3" />
-                            {event.startTime.toLocaleTimeString("en-US", {
+                            {event.startTime.toLocaleTimeString("fr-FR", {
                               hour: "2-digit",
                               minute: "2-digit",
                             })}{" "}
                             -{" "}
-                            {event.endTime.toLocaleTimeString("en-US", {
+                            {event.endTime.toLocaleTimeString("fr-FR", {
                               hour: "2-digit",
                               minute: "2-digit",
                             })}

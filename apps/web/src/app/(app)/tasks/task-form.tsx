@@ -32,12 +32,12 @@ export function TaskForm({ task }: { task?: TaskDto }) {
     <Card className="p-6">
       <form action={formAction} className="flex flex-col gap-5">
         <div>
-          <Label htmlFor="title">Title</Label>
+          <Label htmlFor="title">Titre</Label>
           <Input
             id="title"
             name="title"
             defaultValue={task?.title ?? ''}
-            placeholder="e.g. Weekly team sync"
+            placeholder="Ex. Réunion d'équipe hebdo"
             required
             maxLength={200}
             autoFocus
@@ -50,14 +50,14 @@ export function TaskForm({ task }: { task?: TaskDto }) {
             id="description"
             name="description"
             defaultValue={task?.description ?? ''}
-            placeholder="Anything the future you should know…"
+            placeholder="Une note pour votre futur vous…"
             rows={3}
           />
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div>
-            <Label htmlFor="dueDate">Due date</Label>
+            <Label htmlFor="dueDate">Échéance</Label>
             <Input
               id="dueDate"
               name="dueDate"
@@ -67,39 +67,39 @@ export function TaskForm({ task }: { task?: TaskDto }) {
             />
           </div>
           <div>
-            <Label htmlFor="priority">Priority</Label>
+            <Label htmlFor="priority">Priorité</Label>
             <Select
               id="priority"
               name="priority"
               defaultValue={task?.priority ?? TaskPriority.MEDIUM}
             >
-              <option value={TaskPriority.LOW}>Low</option>
-              <option value={TaskPriority.MEDIUM}>Medium</option>
-              <option value={TaskPriority.HIGH}>High</option>
-              <option value={TaskPriority.URGENT}>Urgent</option>
+              <option value={TaskPriority.LOW}>Faible</option>
+              <option value={TaskPriority.MEDIUM}>Moyenne</option>
+              <option value={TaskPriority.HIGH}>Haute</option>
+              <option value={TaskPriority.URGENT}>Urgente</option>
             </Select>
           </div>
           <div>
-            <Label htmlFor="status">Status</Label>
+            <Label htmlFor="status">Statut</Label>
             <Select
               id="status"
               name="status"
               defaultValue={task?.status ?? TaskStatus.TODO}
             >
-              <option value={TaskStatus.TODO}>To do</option>
-              <option value={TaskStatus.IN_PROGRESS}>In progress</option>
-              <option value={TaskStatus.DONE}>Done</option>
+              <option value={TaskStatus.TODO}>À faire</option>
+              <option value={TaskStatus.IN_PROGRESS}>En cours</option>
+              <option value={TaskStatus.DONE}>Terminée</option>
             </Select>
           </div>
         </div>
 
         <div>
-          <Label htmlFor="tags">Tags</Label>
+          <Label htmlFor="tags">Étiquettes</Label>
           <Input
             id="tags"
             name="tags"
             defaultValue={task?.tags?.join(', ') ?? ''}
-            placeholder="Comma-separated (e.g. work, meeting)"
+            placeholder="Séparées par virgule (ex. travail, réunion)"
           />
         </div>
 
@@ -112,7 +112,7 @@ export function TaskForm({ task }: { task?: TaskDto }) {
               onChange={(e) => setRepeats(e.target.checked)}
               className="h-4 w-4 rounded border-border text-brand-600 focus:ring-brand-500"
             />
-            <span className="font-medium">Repeat this task</span>
+            <span className="font-medium">Répéter cette tâche</span>
           </label>
           {repeats && (
             <div className="mt-4 animate-fade-in">
@@ -130,7 +130,7 @@ export function TaskForm({ task }: { task?: TaskDto }) {
         <div className="flex justify-end gap-2">
           <Link href="/tasks">
             <Button type="button" variant="secondary" size="md">
-              Cancel
+              Annuler
             </Button>
           </Link>
           <SubmitButton isEdit={isEdit} />
@@ -144,7 +144,7 @@ function SubmitButton({ isEdit }: { isEdit: boolean }) {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="md" disabled={pending}>
-      {pending ? 'Saving…' : isEdit ? 'Save changes' : 'Create task'}
+      {pending ? 'Enregistrement…' : isEdit ? 'Enregistrer' : 'Créer la tâche'}
     </Button>
   );
 }

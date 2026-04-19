@@ -17,13 +17,13 @@ export function formatDay(iso: string, now = new Date()): string {
 
 function relativeDayLabel(d: Date, now: Date): string {
   const diff = Math.floor((startOfDay(d).getTime() - startOfDay(now).getTime()) / DAY_MS);
-  if (diff === -1) return 'Yesterday';
-  if (diff === 0) return 'Today';
-  if (diff === 1) return 'Tomorrow';
+  if (diff === -1) return 'Hier';
+  if (diff === 0) return "Aujourd'hui";
+  if (diff === 1) return 'Demain';
   if (diff > 1 && diff < 7) {
-    return d.toLocaleDateString([], { weekday: 'long' });
+    return d.toLocaleDateString('fr-FR', { weekday: 'long' });
   }
-  return d.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+  return d.toLocaleDateString('fr-FR', { weekday: 'short', month: 'short', day: 'numeric' });
 }
 
 function startOfDay(d: Date): Date {

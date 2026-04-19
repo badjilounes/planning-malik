@@ -4,9 +4,13 @@ import { SESSION_COOKIE_NAMES } from './lib/session';
 const PUBLIC_PATHS = ['/login', '/register'];
 
 export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
   const isPublic = PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
   const hasSession = Boolean(request.cookies.get(SESSION_COOKIE_NAMES.access));
+  // When an RSC detects a stale token it redirects here with ?reauth=1.
+  // The access cookie may still be present (RSCs can't clear cookies) — let
+  // the user reach /login instead of bouncing back to /calendar.
+  const isReauth = searchParams.get('reauth') === '1';
 
   if (!hasSession && !isPublic) {
     const url = request.nextUrl.clone();
@@ -15,7 +19,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (hasSession && isPublic) {
+  if (hasSession && isPublic && !isReauth) {
     const url = request.nextUrl.clone();
     url.pathname = '/calendar';
     url.searchParams.delete('from');

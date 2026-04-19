@@ -45,10 +45,16 @@ export async function setSession(tokens: AuthTokens, user?: AuthUserDto): Promis
 }
 
 export async function clearSession(): Promise<void> {
-  const jar = await cookies();
-  jar.delete(ACCESS_COOKIE);
-  jar.delete(REFRESH_COOKIE);
-  jar.delete(USER_COOKIE);
+  try {
+    const jar = await cookies();
+    jar.delete(ACCESS_COOKIE);
+    jar.delete(REFRESH_COOKIE);
+    jar.delete(USER_COOKIE);
+  } catch {
+    // Called from a Server Component — Next forbids cookie mutation in RSC.
+    // The caller will redirect; stale cookies are handled by the proxy's
+    // `reauth` bypass so the user can land on /login and re-authenticate.
+  }
 }
 
 function writeAuthCookies(jar: CookieJar, tokens: AuthTokens, user?: AuthUserDto): void {

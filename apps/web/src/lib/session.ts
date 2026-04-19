@@ -4,9 +4,7 @@ import type { AuthTokens, AuthUserDto } from '@planning/types';
 const ACCESS_COOKIE = 'pm_access';
 const REFRESH_COOKIE = 'pm_refresh';
 const USER_COOKIE = 'pm_user';
-const REFRESH_TTL_SECONDS = 7 * 24 * 60 * 60;
-const ACCESS_TTL_SECONDS = 60 * 60; // the JWT expires in 15m; we keep the
-// cookie a bit longer so it survives briefly for /login reauth flows.
+const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60; // 7 days — matches JWT TTL
 
 type CookieJar = Awaited<ReturnType<typeof cookies>>;
 
@@ -64,14 +62,14 @@ function writeAuthCookies(jar: CookieJar, tokens: AuthTokens, user?: AuthUserDto
     sameSite: 'lax',
     secure,
     path: '/',
-    maxAge: ACCESS_TTL_SECONDS,
+    maxAge: SESSION_TTL_SECONDS,
   });
   jar.set(REFRESH_COOKIE, tokens.refreshToken, {
     httpOnly: true,
     sameSite: 'lax',
     secure,
     path: '/',
-    maxAge: REFRESH_TTL_SECONDS,
+    maxAge: SESSION_TTL_SECONDS,
   });
   if (user) {
     // Non-sensitive — used by client components to display "hi, {name}".
@@ -81,7 +79,7 @@ function writeAuthCookies(jar: CookieJar, tokens: AuthTokens, user?: AuthUserDto
       sameSite: 'lax',
       secure,
       path: '/',
-      maxAge: REFRESH_TTL_SECONDS,
+      maxAge: SESSION_TTL_SECONDS,
     });
   }
 }

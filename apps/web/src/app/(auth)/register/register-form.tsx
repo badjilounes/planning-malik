@@ -16,6 +16,7 @@ export function RegisterForm() {
   return (
     <Card className="p-6">
       <form action={formAction} className="flex flex-col gap-4">
+        <TimezoneField />
         <div>
           <Label htmlFor="displayName">Nom affiché (optionnel)</Label>
           <Input id="displayName" name="displayName" type="text" autoComplete="name" />
@@ -56,6 +57,14 @@ export function RegisterForm() {
       </form>
     </Card>
   );
+}
+
+function TimezoneField() {
+  const tz =
+    typeof Intl !== 'undefined'
+      ? Intl.DateTimeFormat().resolvedOptions().timeZone
+      : undefined;
+  return <input type="hidden" name="timezone" value={tz ?? ''} />;
 }
 
 function SubmitButton() {

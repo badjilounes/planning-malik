@@ -27,7 +27,7 @@ export class EnvVars {
 
   @IsString()
   @IsOptional()
-  JWT_ACCESS_TTL = '15m';
+  JWT_ACCESS_TTL = '7d';
 
   @IsString()
   @IsNotEmpty()

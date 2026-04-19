@@ -10,24 +10,24 @@ export async function registerAction(
   _prev: AuthActionState,
   formData: FormData,
 ): Promise<AuthActionState> {
-  const email = String(formData.get('email') ?? '').trim();
+  const email = String(formData.get('email') ?? '').trim().toLowerCase();
   const password = String(formData.get('password') ?? '');
-  const displayName = String(formData.get('displayName') ?? '').trim() || undefined;
-  const timezone =
-    Intl.DateTimeFormat().resolvedOptions().timeZone ||
-    String(formData.get('timezone') ?? 'UTC');
+  const displayName = String(formData.get('displayName') ?? '').trim();
+  const clientTimezone = String(formData.get('timezone') ?? '').trim();
 
   if (!email || !password) return { error: 'Email et mot de passe obligatoires.' };
   if (password.length < 8) return { error: 'Le mot de passe doit contenir au moins 8 caractères.' };
 
+  // Build a clean payload with only defined fields — Nest's validation pipe
+  // runs with `forbidNonWhitelisted` and `whitelist`, so anything extra or
+  // empty becomes noise we don't need.
+  const payload: Record<string, string> = { email, password };
+  if (displayName) payload.displayName = displayName;
+  if (clientTimezone) payload.timezone = clientTimezone;
+
   let response: AuthResponse;
   try {
-    response = await apiAnonymous<AuthResponse>('/auth/register', 'POST', {
-      email,
-      password,
-      displayName,
-      timezone,
-    });
+    response = await apiAnonymous<AuthResponse>('/auth/register', 'POST', payload);
   } catch (err) {
     if (err instanceof ApiError && err.status === 409) {
       return { error: 'Un compte existe déjà avec cet email.' };

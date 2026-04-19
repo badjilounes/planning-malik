@@ -1,7 +1,7 @@
-import { addDays, endOfWeek, startOfWeek } from 'date-fns';
+import { addDays, startOfWeek } from 'date-fns';
 import { apiGet } from '@/lib/api';
 import type { TaskOccurrenceDto } from '@planning/types';
-import { WeekCalendar } from './week-calendar';
+import { CalendarClient } from './calendar-client';
 
 interface Props {
   searchParams: Promise<{ week?: string }>;
@@ -11,14 +11,16 @@ export default async function CalendarPage({ searchParams }: Props) {
   const { week } = await searchParams;
   const anchor = parseWeekAnchor(week);
   const start = startOfWeek(anchor, { weekStartsOn: 1 });
-  const end = endOfWeek(anchor, { weekStartsOn: 1 });
+  // Give the event-manager enough history/future to freely navigate.
+  const rangeStart = addDays(start, -30);
+  const rangeEnd = addDays(start, 60);
 
   const occurrences = await apiGet<TaskOccurrenceDto[]>(
-    `/tasks?rangeStart=${start.toISOString()}&rangeEnd=${addDays(end, 1).toISOString()}`,
+    `/tasks?rangeStart=${rangeStart.toISOString()}&rangeEnd=${rangeEnd.toISOString()}`,
     { cache: 'no-store' },
   );
 
-  return <WeekCalendar weekStart={start} occurrences={occurrences} />;
+  return <CalendarClient occurrences={occurrences} />;
 }
 
 function parseWeekAnchor(raw: string | undefined): Date {

@@ -34,4 +34,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
   CMD curl -fs "http://localhost:${PORT:-3333}/api/health" || exit 1
 
-CMD ["node", "apps/api/dist/main.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy --schema=libs/data-access/prisma/schema.prisma && node apps/api/dist/main.js"]

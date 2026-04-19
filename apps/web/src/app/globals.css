@@ -124,6 +124,19 @@
     @apply bg-surface text-fg antialiased;
   }
 
+  /* Tailwind v4 changed the default `border` colour to `currentColor`, which
+     produces stark white/black outlines in dark mode (notably on shadcn
+     primitives like Dialog/SelectContent that use the bare `border` class).
+     Restore the design-system token so every bare `border` renders with the
+     same subtle tint as `border-border`. */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--border-color);
+  }
+
   :focus-visible {
     @apply outline-hidden ring-2 ring-brand-500/50 ring-offset-2 ring-offset-surface rounded-[6px];
   }

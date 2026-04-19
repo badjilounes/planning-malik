@@ -16,7 +16,7 @@ import {
   DialogTitle,
 } from "@/components/shadcn/ui/dialog"
 import { Badge } from "@/components/shadcn/ui/badge"
-import { ChevronLeft, ChevronRight, Plus, Calendar, Clock, Grid3x3, List, Search, Filter, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, Plus, Calendar, Clock, Grid3x3, List, Search, Filter, X, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
@@ -26,6 +26,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
+import type { RecurrenceRuleInput } from "@planning/types"
+import {
+  defaultRecurrenceState,
+  RecurrenceSection,
+  type RecurrenceState,
+  toRecurrenceInput,
+} from "./event-recurrence"
 
 export interface Event {
   id: string
@@ -37,6 +44,7 @@ export interface Event {
   category?: string
   attendees?: string[]
   tags?: string[]
+  recurrence?: RecurrenceRuleInput | null
 }
 
 export interface EventManagerProps {
@@ -85,6 +93,7 @@ export function EventManager({
     category: categories[0],
     tags: [],
   })
+  const [recurrence, setRecurrence] = useState<RecurrenceState>(defaultRecurrenceState)
 
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedColors, setSelectedColors] = useState<string[]>([])
@@ -147,6 +156,7 @@ export function EventManager({
       category: newEvent.category,
       attendees: newEvent.attendees,
       tags: newEvent.tags || [],
+      recurrence: toRecurrenceInput(recurrence, newEvent.startTime),
     }
 
     setEvents((prev) => [...prev, event])
@@ -160,7 +170,8 @@ export function EventManager({
       category: categories[0],
       tags: [],
     })
-  }, [newEvent, colors, categories, onEventCreate])
+    setRecurrence(defaultRecurrenceState)
+  }, [newEvent, colors, categories, onEventCreate, recurrence])
 
   const handleUpdateEvent = useCallback(() => {
     if (!selectedEvent) return
@@ -370,6 +381,21 @@ export function EventManager({
 
           <Button
             onClick={() => {
+              const now = new Date()
+              const start = new Date(now)
+              start.setMinutes(0, 0, 0)
+              start.setHours(start.getHours() + 1)
+              const end = new Date(start.getTime() + 60 * 60 * 1000)
+              setNewEvent({
+                title: "",
+                description: "",
+                color: colors[0].value,
+                category: categories[0],
+                tags: [],
+                startTime: start,
+                endTime: end,
+              })
+              setRecurrence(defaultRecurrenceState)
               setIsCreating(true)
               setIsDialogOpen(true)
             }}
@@ -724,34 +750,39 @@ export function EventManager({
 
       {/* Event Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{isCreating ? "Nouvel événement" : "Détails de l'événement"}</DialogTitle>
-            <DialogDescription>
-              {isCreating ? "Ajouter un événement au planning" : "Voir et modifier les détails"}
+        <DialogContent className="max-h-[90vh] max-w-lg overflow-y-auto border-border/70 bg-surface-elevated">
+          <DialogHeader className="space-y-1">
+            <DialogTitle className="text-xl font-semibold tracking-tight">
+              {isCreating ? "Nouvel événement" : "Détails de l'événement"}
+            </DialogTitle>
+            <DialogDescription className="text-sm text-fg-muted">
+              {isCreating
+                ? "Ajouter un événement au planning"
+                : "Voir et modifier les détails"}
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4">
-            <div className="space-y-2">
+          <div className="space-y-5">
+            <div className="space-y-1.5">
               <Label htmlFor="title">Titre</Label>
               <Input
                 id="title"
-                value={isCreating ? newEvent.title : selectedEvent?.title}
+                value={(isCreating ? newEvent.title : selectedEvent?.title) ?? ""}
                 onChange={(e) =>
                   isCreating
                     ? setNewEvent((prev) => ({ ...prev, title: e.target.value }))
                     : setSelectedEvent((prev) => (prev ? { ...prev, title: e.target.value } : null))
                 }
                 placeholder="Titre de l'événement"
+                autoFocus={isCreating}
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
-                value={isCreating ? newEvent.description : selectedEvent?.description}
+                value={(isCreating ? newEvent.description : selectedEvent?.description) ?? ""}
                 onChange={(e) =>
                   isCreating
                     ? setNewEvent((prev) => ({
@@ -765,8 +796,8 @@ export function EventManager({
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="space-y-1.5">
                 <Label htmlFor="startTime">Début</Label>
                 <Input
                   id="startTime"
@@ -774,16 +805,10 @@ export function EventManager({
                   value={
                     isCreating
                       ? newEvent.startTime
-                        ? new Date(newEvent.startTime.getTime() - newEvent.startTime.getTimezoneOffset() * 60000)
-                            .toISOString()
-                            .slice(0, 16)
+                        ? toLocalDatetimeString(newEvent.startTime)
                         : ""
                       : selectedEvent
-                        ? new Date(
-                            selectedEvent.startTime.getTime() - selectedEvent.startTime.getTimezoneOffset() * 60000,
-                          )
-                            .toISOString()
-                            .slice(0, 16)
+                        ? toLocalDatetimeString(selectedEvent.startTime)
                         : ""
                   }
                   onChange={(e) => {
@@ -795,7 +820,7 @@ export function EventManager({
                 />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <Label htmlFor="endTime">Fin</Label>
                 <Input
                   id="endTime"
@@ -803,14 +828,10 @@ export function EventManager({
                   value={
                     isCreating
                       ? newEvent.endTime
-                        ? new Date(newEvent.endTime.getTime() - newEvent.endTime.getTimezoneOffset() * 60000)
-                            .toISOString()
-                            .slice(0, 16)
+                        ? toLocalDatetimeString(newEvent.endTime)
                         : ""
                       : selectedEvent
-                        ? new Date(selectedEvent.endTime.getTime() - selectedEvent.endTime.getTimezoneOffset() * 60000)
-                            .toISOString()
-                            .slice(0, 16)
+                        ? toLocalDatetimeString(selectedEvent.endTime)
                         : ""
                   }
                   onChange={(e) => {
@@ -823,80 +844,115 @@ export function EventManager({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="category">Catégorie</Label>
-                <Select
-                  value={isCreating ? newEvent.category : selectedEvent?.category}
-                  onValueChange={(value) =>
-                    isCreating
-                      ? setNewEvent((prev) => ({ ...prev, category: value }))
-                      : setSelectedEvent((prev) => (prev ? { ...prev, category: value } : null))
-                  }
-                >
-                  <SelectTrigger id="category">
-                    <SelectValue placeholder="Choisir une catégorie" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="color">Couleur</Label>
-                <Select
-                  value={isCreating ? newEvent.color : selectedEvent?.color}
-                  onValueChange={(value) =>
-                    isCreating
-                      ? setNewEvent((prev) => ({ ...prev, color: value }))
-                      : setSelectedEvent((prev) => (prev ? { ...prev, color: value } : null))
-                  }
-                >
-                  <SelectTrigger id="color">
-                    <SelectValue placeholder="Choisir une couleur" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {colors.map((color) => (
-                      <SelectItem key={color.value} value={color.value}>
-                        <div className="flex items-center gap-2">
-                          <div className={cn("h-4 w-4 rounded", color.bg)} />
-                          {color.name}
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="category">Catégorie</Label>
+              <Select
+                value={isCreating ? newEvent.category : selectedEvent?.category}
+                onValueChange={(value) =>
+                  isCreating
+                    ? setNewEvent((prev) => ({ ...prev, category: value }))
+                    : setSelectedEvent((prev) => (prev ? { ...prev, category: value } : null))
+                }
+              >
+                <SelectTrigger id="category" className="w-full">
+                  <SelectValue placeholder="Choisir une catégorie" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label>Étiquettes</Label>
+            <div className="space-y-1.5">
+              <Label>Priorité</Label>
               <div className="flex flex-wrap gap-2">
-                {availableTags.map((tag) => {
-                  const isSelected = isCreating ? newEvent.tags?.includes(tag) : selectedEvent?.tags?.includes(tag)
+                {colors.map((color) => {
+                  const isSelected =
+                    (isCreating ? newEvent.color : selectedEvent?.color) === color.value
                   return (
-                    <Badge
-                      key={tag}
-                      variant={isSelected ? "default" : "outline"}
-                      className="cursor-pointer transition-all hover:scale-105"
-                      onClick={() => toggleTag(tag, isCreating)}
+                    <button
+                      key={color.value}
+                      type="button"
+                      onClick={() =>
+                        isCreating
+                          ? setNewEvent((prev) => ({ ...prev, color: color.value }))
+                          : setSelectedEvent((prev) =>
+                              prev ? { ...prev, color: color.value } : null,
+                            )
+                      }
+                      aria-pressed={isSelected}
+                      aria-label={color.name}
+                      className={cn(
+                        "group flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
+                        isSelected
+                          ? "border-primary bg-primary/10 text-foreground shadow-sm"
+                          : "border-border bg-background text-muted-foreground hover:border-primary/60 hover:text-foreground",
+                      )}
                     >
-                      {tag}
-                    </Badge>
+                      <span
+                        className={cn(
+                          "relative inline-flex h-4 w-4 items-center justify-center rounded-full",
+                          color.bg,
+                        )}
+                      >
+                        {isSelected && <Check className="h-3 w-3 text-white" strokeWidth={3} />}
+                      </span>
+                      {color.name}
+                    </button>
                   )
                 })}
               </div>
             </div>
+
+            <div className="space-y-1.5">
+              <Label>Étiquettes</Label>
+              <div className="flex flex-wrap gap-1.5">
+                {availableTags.map((tag) => {
+                  const isSelected = isCreating
+                    ? newEvent.tags?.includes(tag)
+                    : selectedEvent?.tags?.includes(tag)
+                  return (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() => toggleTag(tag, isCreating)}
+                      aria-pressed={!!isSelected}
+                      className={cn(
+                        "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                        isSelected
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border bg-background text-muted-foreground hover:border-primary/60 hover:text-foreground",
+                      )}
+                    >
+                      {tag}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+
+            {isCreating && (
+              <RecurrenceSection
+                state={recurrence}
+                onChange={setRecurrence}
+                startDate={newEvent.startTime}
+              />
+            )}
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="gap-2 pt-2 sm:gap-2">
             {!isCreating && (
-              <Button variant="destructive" onClick={() => selectedEvent && handleDeleteEvent(selectedEvent.id)}>Supprimer</Button>
+              <Button
+                variant="destructive"
+                onClick={() => selectedEvent && handleDeleteEvent(selectedEvent.id)}
+                className="sm:mr-auto"
+              >
+                Supprimer
+              </Button>
             )}
             <Button
               variant="outline"
@@ -905,7 +961,9 @@ export function EventManager({
                 setIsCreating(false)
                 setSelectedEvent(null)
               }}
-            >Annuler</Button>
+            >
+              Annuler
+            </Button>
             <Button onClick={isCreating ? handleCreateEvent : handleUpdateEvent}>
               {isCreating ? "Créer" : "Enregistrer"}
             </Button>
@@ -1535,4 +1593,8 @@ function getIsoWeek(date: Date): number {
   d.setUTCDate(d.getUTCDate() + 4 - dayNum)
   const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
   return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7)
+}
+
+function toLocalDatetimeString(date: Date): string {
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16)
 }

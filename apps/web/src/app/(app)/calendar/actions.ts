@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { apiAction } from '@/lib/api';
-import type { TaskDto, TaskPriority } from '@planning/types';
+import type { RecurrenceRuleInput, TaskDto, TaskPriority } from '@planning/types';
 
 export interface CreateInput {
   title: string;
@@ -10,6 +10,7 @@ export interface CreateInput {
   dueDate: string;
   priority: TaskPriority;
   tags: string[];
+  recurrence?: RecurrenceRuleInput | null;
 }
 
 export async function createCalendarTaskAction(input: CreateInput): Promise<void> {
@@ -20,7 +21,7 @@ export async function createCalendarTaskAction(input: CreateInput): Promise<void
     priority: input.priority,
     status: 'TODO',
     tags: input.tags,
-    recurrence: null,
+    recurrence: input.recurrence ?? null,
   });
   revalidatePath('/calendar');
 }

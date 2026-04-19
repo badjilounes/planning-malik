@@ -58,6 +58,7 @@ export function CalendarClient({ occurrences }: { occurrences: TaskOccurrenceDto
         dueDate: ev.startTime.toISOString(),
         priority: COLOR_TO_PRIORITY[ev.color] ?? 'MEDIUM',
         tags: ev.tags ?? [],
+        recurrence: ev.recurrence ?? null,
       });
     });
   };

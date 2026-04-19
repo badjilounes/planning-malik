@@ -1,0 +1,139 @@
+// Planning Malik — data model
+//
+// See ARCHITECTURE.md §4 for the reasoning behind the Task /
+// RecurrenceRule / TaskException split. In short:
+//   * Task holds the "template" (title, description, priority, tags).
+//   * RecurrenceRule holds the rule (RFC 5545 RRULE) if the task repeats.
+//   * TaskException stores per-occurrence overrides (SKIP / MODIFY) so
+//     "edit only this one" and "skip this occurrence" are O(1) writes
+//     instead of row explosions.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum RecurrenceFreq {
+  DAILY
+  WEEKLY
+  MONTHLY
+  CUSTOM
+}
+
+enum ExceptionAction {
+  SKIP
+  MODIFY
+}
+
+// ─── Auth ────────────────────────────────────────────────────────────────
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  displayName  String?
+  timezone     String   @default("UTC")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tasks         Task[]
+  refreshTokens RefreshToken[]
+
+  @@index([email])
+}
+
+model RefreshToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+// ─── Tasks ───────────────────────────────────────────────────────────────
+
+model Task {
+  id          String       @id @default(cuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  // Non-recurring tasks use dueDate. Recurring tasks use dueDate as the
+  // time-of-day + first-occurrence reference (the rule's DTSTART).
+  dueDate     DateTime
+  priority    TaskPriority @default(MEDIUM)
+  status      TaskStatus   @default(TODO)
+  tags        String[]     @default([])
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  recurrence       RecurrenceRule?
+  exceptions       TaskException[]
+
+  @@index([userId, dueDate])
+  @@index([userId, status])
+}
+
+model RecurrenceRule {
+  id          String         @id @default(cuid())
+  taskId      String         @unique
+  task        Task           @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  freq        RecurrenceFreq
+  interval    Int            @default(1)
+  // Present when freq = WEEKLY. 0=Monday..6=Sunday (ISO).
+  byWeekday   Int[]          @default([])
+  // Present when freq = MONTHLY. 1..31.
+  byMonthDay  Int[]          @default([])
+  startsOn    DateTime
+  endsOn      DateTime?
+  count       Int?
+  // Canonical RFC 5545 RRULE — source of truth for expansion.
+  rruleString String
+
+  @@index([startsOn, endsOn])
+}
+
+model TaskException {
+  id           String          @id @default(cuid())
+  taskId       String
+  task         Task            @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  // The original occurrence date this exception overrides (as computed by
+  // rule expansion). Matched by calendar day in the user's timezone.
+  originalDate DateTime
+  action       ExceptionAction
+  // When action = MODIFY, these override the parent Task for this one
+  // occurrence. Null = inherit from parent.
+  title        String?
+  description  String?
+  dueDate      DateTime?
+  status       TaskStatus?
+  priority     TaskPriority?
+  createdAt    DateTime        @default(now())
+
+  @@unique([taskId, originalDate])
+  @@index([taskId, originalDate])
+}

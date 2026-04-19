@@ -1,0 +1,37 @@
+# deps
+node_modules/
+.pnp.*
+
+# build artifacts
+dist/
+tmp/
+out-tsc/
+*.tsbuildinfo
+
+# nx
+.nx/cache
+.nx/workspace-data
+
+# env
+.env
+.env.local
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+
+# editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+.idea/
+.DS_Store
+
+# coverage / tests
+coverage/
+.jest-cache/
+
+# prisma
+*.db
+*.db-journal

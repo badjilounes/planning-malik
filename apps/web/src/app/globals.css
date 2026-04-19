@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --surface: 0 0% 100%;
+    --surface-muted: 220 14% 96%;
+    --surface-elevated: 0 0% 100%;
+    --fg: 222 47% 11%;
+    --fg-muted: 220 9% 46%;
+    --fg-subtle: 220 9% 65%;
+    --border: 220 13% 91%;
+  }
+
+  .dark {
+    --surface: 222 47% 6%;
+    --surface-muted: 222 24% 11%;
+    --surface-elevated: 222 30% 9%;
+    --fg: 210 20% 98%;
+    --fg-muted: 215 16% 70%;
+    --fg-subtle: 217 10% 50%;
+    --border: 222 18% 18%;
+  }
+
+  html {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-surface text-fg antialiased;
+  }
+
+  /* Subtle focus ring used by all interactive elements. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500/50 ring-offset-2 ring-offset-surface rounded-[6px];
+  }
+}
+
+@layer components {
+  .glass {
+    @apply border border-border/70 bg-surface-elevated/80 backdrop-blur-md shadow-soft;
+  }
+}

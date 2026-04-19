@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
+    "types": ["jest", "node"],
+    "baseUrl": "../..",
+    "paths": {
+      "@planning/data-access": ["libs/data-access/src/index.ts"],
+      "@planning/types": ["libs/types/src/index.ts"],
+      "@planning/utils": ["libs/utils/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.spec.ts", "src/**/*.test.ts", "src/**/*.d.ts"]
+}

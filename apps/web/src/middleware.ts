@@ -3,7 +3,7 @@ import { SESSION_COOKIE_NAMES } from './lib/session';
 
 const PUBLIC_PATHS = ['/login', '/register'];
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
   const isPublic = PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
   const hasSession = Boolean(request.cookies.get(SESSION_COOKIE_NAMES.access));

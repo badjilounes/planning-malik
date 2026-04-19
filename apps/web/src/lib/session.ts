@@ -50,7 +50,7 @@ export async function clearSession(): Promise<void> {
     jar.delete(USER_COOKIE);
   } catch {
     // Called from a Server Component — Next forbids cookie mutation in RSC.
-    // The caller will redirect; stale cookies are handled by the proxy's
+    // The caller will redirect; stale cookies are handled by the middleware's
     // `reauth` bypass so the user can land on /login and re-authenticate.
   }
 }

@@ -3,7 +3,7 @@ import { SESSION_COOKIE_NAMES } from './lib/session';
 
 const PUBLIC_PATHS = ['/login', '/register'];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isPublic = PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
   const hasSession = Boolean(request.cookies.get(SESSION_COOKIE_NAMES.access));
@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
 
   if (hasSession && isPublic) {
     const url = request.nextUrl.clone();
-    url.pathname = '/tasks';
+    url.pathname = '/calendar';
     url.searchParams.delete('from');
     return NextResponse.redirect(url);
   }

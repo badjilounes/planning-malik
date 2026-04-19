@@ -1,28 +1,75 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --surface: hsl(0 0% 100%);
+  --surface-muted: hsl(220 14% 96%);
+  --surface-elevated: hsl(0 0% 100%);
+  --fg: hsl(222 47% 11%);
+  --fg-muted: hsl(220 9% 46%);
+  --fg-subtle: hsl(220 9% 65%);
+  --border: hsl(220 13% 91%);
+}
+
+.dark {
+  --surface: hsl(222 47% 6%);
+  --surface-muted: hsl(222 24% 11%);
+  --surface-elevated: hsl(222 30% 9%);
+  --fg: hsl(210 20% 98%);
+  --fg-muted: hsl(215 16% 70%);
+  --fg-subtle: hsl(217 10% 50%);
+  --border: hsl(222 18% 18%);
+}
+
+@theme inline {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-border: var(--border);
+
+  --color-brand-50: #f4f3ff;
+  --color-brand-100: #ebe9fe;
+  --color-brand-200: #d9d6fe;
+  --color-brand-300: #bdb4fd;
+  --color-brand-400: #9b8afb;
+  --color-brand-500: #7c5cf8;
+  --color-brand-600: #6b42ef;
+  --color-brand-700: #5a30db;
+  --color-brand-800: #4b29b7;
+  --color-brand-900: #3f2596;
+
+  --color-priority-low: #94a3b8;
+  --color-priority-medium: #60a5fa;
+  --color-priority-high: #f59e0b;
+  --color-priority-urgent: #ef4444;
+
+  --radius-xl: 14px;
+  --radius-2xl: 20px;
+
+  --shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 16px -4px rgba(16, 24, 40, 0.06);
+  --shadow-pop: 0 8px 24px -8px rgba(16, 24, 40, 0.16);
+
+  --animate-fade-in: fade-in 180ms ease-out;
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
 
 @layer base {
-  :root {
-    --surface: 0 0% 100%;
-    --surface-muted: 220 14% 96%;
-    --surface-elevated: 0 0% 100%;
-    --fg: 222 47% 11%;
-    --fg-muted: 220 9% 46%;
-    --fg-subtle: 220 9% 65%;
-    --border: 220 13% 91%;
-  }
-
-  .dark {
-    --surface: 222 47% 6%;
-    --surface-muted: 222 24% 11%;
-    --surface-elevated: 222 30% 9%;
-    --fg: 210 20% 98%;
-    --fg-muted: 215 16% 70%;
-    --fg-subtle: 217 10% 50%;
-    --border: 222 18% 18%;
-  }
-
   html {
     font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -33,9 +80,8 @@
     @apply bg-surface text-fg antialiased;
   }
 
-  /* Subtle focus ring used by all interactive elements. */
   :focus-visible {
-    @apply outline-none ring-2 ring-brand-500/50 ring-offset-2 ring-offset-surface rounded-[6px];
+    @apply outline-hidden ring-2 ring-brand-500/50 ring-offset-2 ring-offset-surface rounded-[6px];
   }
 }
 

@@ -45,7 +45,7 @@ export async function registerAction(
   }
 
   await setSession(response.tokens, response.user);
-  redirect('/tasks');
+  redirect('/calendar');
 }
 
 function extractMessages(body: unknown): string | null {

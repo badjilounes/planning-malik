@@ -15,7 +15,7 @@ export async function loginAction(
 ): Promise<AuthActionState> {
   const email = String(formData.get('email') ?? '').trim();
   const password = String(formData.get('password') ?? '');
-  const redirectTo = String(formData.get('from') ?? '/tasks');
+  const redirectTo = String(formData.get('from') ?? '/calendar');
 
   if (!email || !password) {
     return { error: 'Please enter your email and password.' };
@@ -33,5 +33,5 @@ export async function loginAction(
   }
 
   await setSession(response.tokens, response.user);
-  redirect(redirectTo.startsWith('/') ? redirectTo : '/tasks');
+  redirect(redirectTo.startsWith('/') ? redirectTo : '/calendar');
 }

@@ -22,7 +22,7 @@ export default async function LoginPage({
         </div>
       )}
 
-      <LoginForm from={params.from ?? '/tasks'} />
+      <LoginForm from={params.from ?? '/calendar'} />
 
       <p className="text-center text-xs text-fg-muted">
         Don&apos;t have an account?{' '}

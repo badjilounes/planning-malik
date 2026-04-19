@@ -41,18 +41,14 @@ export async function AppShell({ children }: { children: ReactNode }) {
 function Sidebar() {
   return (
     <aside className="sticky top-0 hidden h-screen w-60 flex-col border-r border-border bg-surface-muted/40 px-4 py-5 md:flex">
-      <Link href="/tasks" className="mb-8 flex items-center gap-2 px-2 text-sm font-semibold tracking-tight">
+      <Link href="/calendar" className="mb-8 flex items-center gap-2 px-2 text-sm font-semibold tracking-tight">
         <span className="inline-block h-6 w-6 rounded-lg bg-brand-600" aria-hidden />
         Planning Malik
       </Link>
 
       <nav className="flex flex-col gap-0.5">
+        <NavLink href="/calendar" icon={<CalendarDays className="h-4 w-4" />} label="Calendar" />
         <NavLink href="/tasks" icon={<ListChecks className="h-4 w-4" />} label="Tasks" />
-        <NavLink
-          href="/tasks?view=week"
-          icon={<CalendarDays className="h-4 w-4" />}
-          label="This week"
-        />
       </nav>
 
       <div className="mt-auto">
